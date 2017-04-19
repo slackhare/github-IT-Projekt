@@ -12,7 +12,7 @@ from model import Model
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='../data/bigWiki/AA',
+    parser.add_argument('--data_dir', type=str, default='../data/bigWikiAllChars/AA',
                        help='data directory containing input.txt')
     parser.add_argument('--save_dir', type=str, default='../allSaves/512-4-wiki',
                        help='directory to store checkpointed models')
