@@ -14,7 +14,7 @@ from six import text_type
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save_dir', type=str, default='../allSaves/bigWiki',
+    parser.add_argument('--save_dir', type=str, default='../allSaves/512-4-wiki',
                        help='model directory to store checkpointed models')
     parser.add_argument('-n', type=int, default=1000,
                        help='number of characters to sample')
