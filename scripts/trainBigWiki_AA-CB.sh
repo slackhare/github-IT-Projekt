@@ -1,10 +1,21 @@
+rnns=512
+numl=4
+lr=0.00025
+bs=100
+sl=100
+
+save="../allSaves/$rnns-$numl-$sl-wiki"
+data="../data/bigWikiAllChars"
+init=$save
+
+mkdir $save
 for letterOne in {A..B} ; do
   for letterTwo in {A..Z} ; do
     echo $letterOne$letterTwo
-    python3 trainBigWiki.py --data_dir=../data/bigWikiAllChars/$letterOne$letterTwo/ --num_epochs 1 --learning_rate 0.00025
+    python3 trainWiki.py --data_dir=$data/$letterOne$letterTwo/ --save_dir=$save --init_from $init --num_layers $numl --rnn_size $rnns --num_epochs 1 --batch_size $bs --seq_length $sl --learning_rate $lr
   done
 done
 echo CA
-python3 trainBigWiki.py --data_dir=../data/bigWikiAllChars/CA/ --num_epochs 1 --learning_rate 0.00025
+python3 trainWiki.py --data_dir=$data/CA/ --save_dir=$save --init_from $init --num_layers $numl --rnn_size $rnns --num_epochs 1 --batch_size $bs --seq_length $sl --learning_rate $lr
 echo CB
-python3 trainBigWiki.py --data_dir=../data/bigWikiAllChars/CB/ --num_epochs 1 --learning_rate 0.00025
+python3 trainWiki.py --data_dir=$data/CB/ --save_dir=$save --init_from $init --num_layers $numl --rnn_size $rnns --num_epochs 1 --batch_size $bs --seq_length $sl --learning_rate $lr

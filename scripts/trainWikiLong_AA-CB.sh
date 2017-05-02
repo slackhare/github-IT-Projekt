@@ -6,8 +6,6 @@ sl=300
 
 save="../allSaves/$rnns-$numl-$sl-wiki"
 data="../data/bigWikiAllChars"
-
-#init=None
 init=$save
 
 mkdir $save
