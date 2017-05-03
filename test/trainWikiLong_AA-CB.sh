@@ -12,7 +12,7 @@ mkdir $save
 for letterOne in {A..B} ; do
   for letterTwo in {A..Z} ; do
     echo $letterOne$letterTwo
-    python3 trainWiki.py --data_dir=$data/$letterOne$letterTwo/ --save_dir=$save --init_from $init --num_layers $num --num_epochs 1 --batch_size $bs --seq_length $sl --learning_rate $lr
+    python3 trainWiki.py --data_dir=$data/$letterOne$letterTwo/ --save_dir=$save --init_from $init --num_layers $numl --rnn_size $rnns  --num_epochs 1 --batch_size $bs --seq_length $sl --learning_rate $lr
   done
 done
 echo CA
