@@ -2,4 +2,7 @@ data/*
 allSaves/*
 scripts/__pycache__/*
 test/__pycache__/*
+extractWiki/text
+extractWiki/merged
+extractWiki/dewiki-latest-pages-articles.xml.bz2
 
