@@ -1,12 +1,12 @@
 rnns=256
 numl=8
-lr=0.002
+lr=0.0005
 bs=300
 sl=300
 
-save="../allSaves/$rnns-$numl-$sl-wiki"
+save="../allSaves/$rnns-$numl-$sl-wiki_lower_lerningrate"
 data="../data/bigWikiAllChars"
-init=$save
+init="../allSaves/$rnns-$numl-$sl-wiki"
 
 mkdir $save
 
