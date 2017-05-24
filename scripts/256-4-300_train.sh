@@ -1,8 +1,8 @@
-rnns=512
+rnns=256
 numl=4
-lr=0.001
-bs=800
-sl=800
+lr=0.002
+bs=300
+sl=300
 
 save="../allSaves/$rnns-$numl-$sl-wiki"
 data="../data/bigWikiAllChars"
