@@ -109,3 +109,71 @@ class Model():
             char = pred
         return ret
 
+    def nextPart(self, sess, chars, vocab, prime='The ', numerOfSentences=3, trys=100, type=0, round=True):
+        def reset():
+            state = sess.run(self.cell.zero_state(1, tf.float32))
+            for char in prime[:-1]:
+                x = np.zeros((1, 1))
+                x[0, 0] = vocab[char]
+                feed = {self.input_data: x, self.initial_state:state}
+                [state] = sess.run([self.final_state], feed)
+            return state
+
+        def weighted_pick(weights):
+            t = np.cumsum(weights)
+            s = np.sum(weights)
+            return(int(np.searchsorted(t, np.random.rand(1)*s)))
+
+        # type = 0 = word
+        # type = 1 = sentence
+        endTokens = []
+        if type == 0:
+            endTokens = [' ', '\n']
+        else:
+            endTokens = ['.', '\n', '?', '!', ';', ':']
+
+        partList = []
+        probList = []
+        for myTry in range(trys):
+
+            # teach prime text to model
+            state = reset()
+
+            part = ''
+            char = prime[-1]
+            sentenceProb = 1.0
+            weighted = True
+            for numChar in range(1000):
+                x = np.zeros((1, 1))
+                x[0, 0] = vocab[char]
+                feed = {self.input_data: x, self.initial_state:state}
+                [probs, state] = sess.run([self.probs, self.final_state], feed)
+                p = probs[0]
+
+                if weighted and myTry > 0:
+                    sample = weighted_pick(p)
+                else:
+                    sample = np.argmax(p)
+
+                pred = chars[sample]
+                sentenceProb = sentenceProb*p[sample]
+                part += pred
+                char = pred
+                if pred in endTokens:
+                    break
+
+                weighted = False
+                for oldPart in partList:
+                    if part == oldPart[:len(part)]:
+                        weighted = True
+
+
+            if part not in partList and part not in endTokens:
+                partList.append(part)
+                probList.append(sentenceProb)
+
+        returnList = []
+        for i in range(len(partList)):
+            returnList.append([partList[i], probList[i]*100])
+        returnList = sorted(returnList, key=lambda l:l[1], reverse=True)
+        return returnList[:numerOfSentences]
