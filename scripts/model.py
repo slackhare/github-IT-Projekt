@@ -109,7 +109,7 @@ class Model():
             char = pred
         return ret
 
-    def nextPart(self, sess, chars, vocab, prime='The ', numerOfSentences=3, trys=100, type=0, round=True):
+    def nextPart(self, sess, chars, vocab, prime='The ', trys=100, type=0):
         def reset():
             state = sess.run(self.cell.zero_state(1, tf.float32))
             for char in prime[:-1]:
@@ -176,4 +176,4 @@ class Model():
         for i in range(len(partList)):
             returnList.append([partList[i], probList[i]*100])
         returnList = sorted(returnList, key=lambda l:l[1], reverse=True)
-        return returnList[:numerOfSentences]
+        return returnList

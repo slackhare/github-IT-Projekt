@@ -29,10 +29,6 @@ def main():
     for i in range(len(tmp)):
         print(str(i+1)+".",tmp[i][0],str(round(tmp[i][1],2))+"%")
 
-    print("")
-    for i in range(len(tmp)):
-        print(str(i + 1) + ".", args.prime + tmp[i][0])
-
 
 def nextWord(args):
     with open(os.path.join(args.save_dir, 'config.pkl'), 'rb') as f:
@@ -46,7 +42,7 @@ def nextWord(args):
         ckpt = tf.train.get_checkpoint_state(args.save_dir)
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
-            retunText = model.nextPart(sess, chars, vocab, args.prime, args.number_of_words, args.number_of_trys, 0)
+            retunText = model.nextPart(sess, chars, vocab, args.prime, args.number_of_trys, 0)[:args.number_of_words]
             #print(retunText)
     return retunText
 
